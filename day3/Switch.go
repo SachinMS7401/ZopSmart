@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+/*
+Go's switch is like the one in C, C++, Java, JavaScript, and PHP,except he break statement that is needed at the end of each case in those languages
+is provided automatically in Go. Another important difference is that Go's switch cases need not be constants, and the values involved need not be integers.
+*/
 func main() {
 	fmt.Println("When's Wednesday?")
 	today := time.Now().Weekday()
