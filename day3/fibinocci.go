@@ -14,6 +14,6 @@ func fibinocci(n int) {
 }
 
 func main() {
-	//fibinocci(5)
+	//Zfibinocci(5)
 	fibinocci(10)
 }
