@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Method does not change the outer receiver .pass by value receiver
 type bar struct {
 	x int
 	y *int
