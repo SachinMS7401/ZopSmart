@@ -1,0 +1,538 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Movie-management-system",
+    "description": "Movie-management-system on three layered architecture",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8009"
+    }
+  ],
+  "tags": [
+    {
+      "name": "movies",
+      "description": "Movie-management-system"
+    }
+  ],
+  "paths": {
+    "/movies": {
+      "post": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Adds movies into the table",
+        "description": "Adding movies",
+        "operationId": "updateMovies",
+        "requestBody": {
+          "description": "Adding a movies in the database",
+          "content": {
+            "movies/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Reads movies from the table",
+        "description": "Reads movies from table.",
+        "operationId": "ReadAllMovies",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/AllMovies": {
+                "schema": {
+                  "$ref": "#/components/schemas/movies"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Id/Title Empty"
+          },
+          "404": {
+            "description": "page not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Reads movie from the table",
+        "description": "Reads a movie",
+        "operationId": "ReadMovie",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Id/Title Empty"
+          },
+          "404": {
+            "description": "movies not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Updates an movie in the table",
+        "description": "Updating a movies",
+        "operationId": "updateMovies",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 10
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updating a movies from the database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Id/Title Empty"
+          },
+          "404": {
+            "description": "movies not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Deletes an entity from the table",
+        "description": "Deleting a movie",
+        "operationId": "deleteMovies",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 10
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Status No content"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "movies not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UpdateRequest": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "integer",
+            "format": "float64",
+            "example": 1
+          },
+          "plot": {
+            "type": "string",
+            "example": "Jungle safari"
+          },
+          "release_date": {
+            "type": "string",
+            "example": "2020-12-12"
+          }
+        }
+      },
+      "UpdateResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int",
+                "example": 10
+              },
+              "name": {
+                "type": "string",
+                "format": "string",
+                "example": "RRR"
+              },
+              "genre": {
+                "type": "string",
+                "example": "action"
+              },
+              "rating": {
+                "type": "integer",
+                "example": 12
+              },
+              "release_date": {
+                "type": "string",
+                "example": "2022-12-12"
+              },
+              "updated_at": {
+                "type": "string",
+                "example": "2023-02-07T07:49:47.000Z"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "2023-02-06T22:22:55.000Z"
+              }
+            }
+          }
+        }
+      },
+      "movies1": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "format": "string",
+            "example": "RRR"
+          },
+          "genre": {
+            "type": "string",
+            "example": "action"
+          },
+          "rating": {
+            "type": "integer",
+            "example": 12
+          },
+          "release_date": {
+            "type": "string",
+            "example": "2022-12-12"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2023-02-07T07:49:47.000Z"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2023-02-06T22:22:55.000Z"
+          }
+        }
+      },
+      "movies2": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "format": "string",
+            "example": "RRR"
+          },
+          "genre": {
+            "type": "string",
+            "example": "action"
+          },
+          "rating": {
+            "type": "integer",
+            "example": 12
+          },
+          "release_date": {
+            "type": "string",
+            "example": "2022-12-12"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2023-02-07T07:49:47.000Z"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2023-02-06T22:22:55.000Z"
+          }
+        }
+      },
+      "movies": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/movies1"
+                },
+                {
+                  "$ref": "#/components/schemas/movies2"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "CreateRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "format": "string",
+            "example": "RRR"
+          },
+          "genre": {
+            "type": "string",
+            "example": "action"
+          },
+          "rating": {
+            "type": "integer",
+            "example": 12
+          },
+          "release_date": {
+            "type": "string",
+            "example": "2022-12-12"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2023-02-07T07:49:47.000Z"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2023-02-06T22:22:55.000Z"
+          }
+        }
+      },
+      "CreateResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int",
+                "example": 10
+              },
+              "name": {
+                "type": "string",
+                "format": "string",
+                "example": "RRR"
+              },
+              "genre": {
+                "type": "string",
+                "example": "action"
+              },
+              "rating": {
+                "type": "integer",
+                "example": 12
+              },
+              "release_date": {
+                "type": "string",
+                "example": "2022-12-12"
+              },
+              "updated_at": {
+                "type": "string",
+                "example": "2023-02-07T07:49:47.000Z"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "2023-02-06T22:22:55.000Z"
+              }
+            }
+          }
+        }
+      },
+      "Output": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int",
+            "example": 201
+          },
+          "status": {
+            "type": "string",
+            "format": "string",
+            "example": "Posted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int",
+                "example": 10
+              },
+              "name": {
+                "type": "string",
+                "format": "string",
+                "example": "RRR"
+              },
+              "genre": {
+                "type": "string",
+                "example": "action"
+              },
+              "rating": {
+                "type": "integer",
+                "example": 12
+              },
+              "release_date": {
+                "type": "string",
+                "example": "2022-12-12"
+              },
+              "updated_at": {
+                "type": "string",
+                "example": "2023-02-07T07:49:47.000Z"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "2023-02-06T22:22:55.000Z"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
